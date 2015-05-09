@@ -46,7 +46,7 @@ Discovery.prototype.setTorrent = function (torrent) {
     self.infoHash = torrent
   }
   debug('setTorrent %s', self.infoHash)
-
+  console.log('will create tracker')
   // If tracker exists, then it was created with just infoHash. Set torrent length
   // so client can report correct information about uploads.
   if (self.tracker && self.tracker !== true) {
@@ -82,16 +82,17 @@ Discovery.prototype._createTracker = function () {
   var self = this
   if (!self.tracker) return
 
+  console.log('A')
   var torrent = self.torrent || {
     infoHash: self.infoHash,
     announce: self.announce
   }
-
+  console.log('B')
   var trackerOpts = {
     rtcConfig: self.rtcConfig,
     wrtc: self.wrtc
   }
-
+  console.log('C')
   self.tracker = new Tracker(self.peerId, self.port, torrent, trackerOpts)
 
   reemit(self.tracker, self, ['peer', 'warning', 'error'])
